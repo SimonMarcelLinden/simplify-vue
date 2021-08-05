@@ -45,4 +45,4 @@
 
 <h2 align="center">License</h2>
 
-Released under the MIT [License](./LICENSE). Copyright (c) BootstrapVue.
+Released under the MIT [License](./LICENSE). Copyright (c) SimplifyVue.
