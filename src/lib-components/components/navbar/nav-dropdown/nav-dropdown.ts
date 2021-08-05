@@ -9,7 +9,7 @@ export default /*#__PURE__*/ Vue.extend({
     SNavLink,
   },
   props: {
-    title: {
+    text: {
       type: String,
       default: 'Dropdown',
       required: false,

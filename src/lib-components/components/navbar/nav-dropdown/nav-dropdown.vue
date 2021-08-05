@@ -2,7 +2,7 @@
   <li class="nav-item nav-dropdown"
     @mouseover="hover = true" @mouseleave="hover = false" >
     <s-nav-link class="dropdown-toggle">
-      <span>{{ title }}</span>
+      <span>{{ text }}</span>
     </s-nav-link>
 
     <ul class="dropdown-menu" :class="{ 'show': hover, 'dropdown-menu-right': right }" >
