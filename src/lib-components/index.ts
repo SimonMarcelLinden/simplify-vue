@@ -3,7 +3,7 @@ export { default as SButton } from './components/button/button.vue';
 
 export { default as SNavbar } from './components/navbar/navbar/navbar.vue';
 export { default as SNavbarBrand } from './components/navbar/navbar-brand/navbar-brand.vue';
-export { default as SNavbarToggle } from './components/navbar/navbar-toggle/navbar-toggle.vue';
+export { default as SNavbarToggler } from './components/navbar/navbar-toggler/navbar-toggler.vue';
 export { default as SNavbarNav } from './components/navbar/navbar-nav/navbar-nav.vue';
 export { default as SNavDropdown } from './components/navbar/nav-dropdown/nav-dropdown.vue';
 export { default as SNavItem } from './components/navbar/nav-item/nav-item.vue';
