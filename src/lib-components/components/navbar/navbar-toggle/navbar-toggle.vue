@@ -1,6 +1,6 @@
 <template>
   <s-button type="button" @onClick="onClick"> 
-    <span class="navbar-toggle-icon" /> 
+    <span class="navbar-toggler-icon" :class="'simplify-' + icon"/> 
   </s-button>
 </template>
 

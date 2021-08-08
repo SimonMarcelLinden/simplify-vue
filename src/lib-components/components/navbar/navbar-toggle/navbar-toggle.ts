@@ -14,6 +14,11 @@ export default /*#__PURE__*/ Vue.extend({
             type: Boolean,
             required: false,
             default: false
+        },
+        icon: {
+            type: String,
+            required: false,
+            default: 'menu'
         }
     },
     data() {
