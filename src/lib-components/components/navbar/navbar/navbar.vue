@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar navbar-collapse collapse md:end">
+  <div class="navbar navbar:lg md:end">
     <slot />
   </div>
 </template>
