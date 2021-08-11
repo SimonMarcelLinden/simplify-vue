@@ -1,7 +1,7 @@
 <template>
-  <div class="navbar navbar:lg md:end">
+  <nav class="navbar" :class="expandClass">
     <slot />
-  </div>
+  </nav>
 </template>
 
 <script src="./navbar.ts" lang="ts"></script>
