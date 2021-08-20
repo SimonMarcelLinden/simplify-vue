@@ -11,6 +11,7 @@ const buildPresets = [
     },
   ],
   '@babel/preset-typescript',
+  '@vue/cli-plugin-babel/preset',
 ];
 module.exports = {
   presets: (process.env.NODE_ENV === 'development' ? devPresets : buildPresets),

@@ -18,3 +18,6 @@ export { default as SCollapse } from './components/collapse/collapse.vue';
 // export * as components from './components'
 
 export * from './components/form';
+
+export { default as SCarousel } from './components/carousel/carousel.vue';
+export { default as SCarouselSlide } from './components/carousel/carousel-slide.vue';
