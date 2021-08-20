@@ -20,7 +20,7 @@ export default /*#__PURE__*/ Vue.extend({
         controls: {
             type: Boolean,
             required: false,
-            default: false,
+            default: true,
         },
         indicators: {
             type: Boolean,
@@ -228,7 +228,35 @@ export default /*#__PURE__*/ Vue.extend({
             'class': ['carousel-wrapper', this.transitionClass],
             'style': `transform: ${this.transformStyle};`
         };
-        
+
+        let controls = (this.controls) ? createElement(
+            SCarouselControl, 
+            {
+                on: {
+                    previous: () => {
+                        this.previous();
+                    },
+                    next: () => {
+                        this.next();
+                    },
+                },
+                attrs: {
+                    id: this.id,
+                },
+                props: { },
+            }
+        ) : undefined
+
+        let indicators = (this.indicators) ? createElement(
+            SCarouselIndicator, {
+            attrs: {
+                id: this.id,
+                length: children.length,
+                currentIndex: this.currentIndex,
+            },
+            props: { }
+        }) : undefined
+
         return createElement(
             /** {String | Object | Function} tag
              * An HTML tag name, a component, an async component, or a
@@ -266,31 +294,8 @@ export default /*#__PURE__*/ Vue.extend({
                         children,
                     ]
                 ),
-                createElement(
-                    SCarouselControl, 
-                    {
-                        on: {
-                            previous: () => {
-                                this.previous();
-                            },
-                            next: () => {
-                                this.next();
-                            },
-                        },
-                        attrs: {
-                            id: this.id,
-                        },
-                        props: { },
-                    }),
-                createElement(
-                    SCarouselIndicator, {
-                    attrs: {
-                        id: this.id,
-                        length: children.length,
-                        currentIndex: this.currentIndex,
-                    },
-                    props: { }
-                })
+                controls,
+                indicators,
             ]
         )
     }
