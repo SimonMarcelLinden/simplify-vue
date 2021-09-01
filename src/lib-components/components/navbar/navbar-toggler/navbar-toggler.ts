@@ -10,6 +10,11 @@ export default /*#__PURE__*/ Vue.extend({
             type: String,
             required: false,
         },
+        disabled: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
         icon: {
             type: String,
             required: false,
