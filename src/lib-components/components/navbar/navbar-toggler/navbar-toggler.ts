@@ -10,21 +10,26 @@ export default /*#__PURE__*/ Vue.extend({
             type: String,
             required: false,
         },
-        disabled: {
-            type: Boolean,
-            required: false,
-            default: false
-        },
         icon: {
             type: String,
             required: false,
             default: 'menu'
+        },
+        toggleIcon: {
+            type: String,
+            required: false,
+            default: 'close'
         }
     },
     data() {
         return {
             toggled: false,
         };
+    },
+    watch: {
+        toggled: function() {
+
+        }
     },
     methods: {
         // Todo: Add prop event: Event

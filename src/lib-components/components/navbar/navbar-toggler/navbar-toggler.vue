@@ -1,7 +1,7 @@
 <template>
-  <s-button type="button" @onClick="onClick" class="navbar-toggler"> 
+  <s-button type="button" @onClick="onClick" class="navbar-toggler" v-bind:aria-expanded="toggled" > 
     <span class="navbar-toggler-icon">
-      <i v-if="icon" :class="'simplify-' + icon" />
+      <i v-if="icon" :class="!toggled ? 'simplify-' + icon : 'simplify-' + toggleIcon" />
     </span>
   </s-button>
 </template>
