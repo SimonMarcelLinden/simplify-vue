@@ -25,7 +25,6 @@ export default /*#__PURE__*/ Vue.extend({
     },
     computed: {
         expandClass: function () {
-            console.log(this.expand)
             if (this.expand)
                 return this.expand + ':navbar-expand';
             else
