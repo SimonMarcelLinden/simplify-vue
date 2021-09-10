@@ -1,5 +1,5 @@
 <template>
-  <li class="nav-item nav-dropdown"
+  <li class="nav-item dropdown"
     @mouseover="hover = true" @mouseleave="hover = false" >
     <s-nav-link class="dropdown-toggle">
       <span>{{ text }}</span>
