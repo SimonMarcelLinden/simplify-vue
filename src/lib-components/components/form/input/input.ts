@@ -11,6 +11,14 @@ const TYPES = [
   "color",
 ];
 
+const SIZES = [
+  "sm",
+  "md",
+  "lg",
+  "xl",
+  "xll",
+];
+
 export default /*#__PURE__*/ Vue.extend({
   name: "SFormInput", // vue component name
   components: { },
@@ -48,6 +56,17 @@ export default /*#__PURE__*/ Vue.extend({
       type: Boolean,
       default: false,
     },
+    size: {
+      type: String,
+      default: null,
+      validator(value) {
+        const isValid = SIZES.includes(value) || value == null;
+        if (!isValid) {
+          console.warn(`allowed types are ${SIZES}`);
+        }
+        return isValid;
+      },
+    },
   },
   computed: {
     inputVal: {
@@ -58,5 +77,10 @@ export default /*#__PURE__*/ Vue.extend({
         this.$emit("input", val);
       },
     },
+    sizeClass: {
+      get(): String {
+        return `form-control-${this.size}`;
+      }
+    }
   },
 });

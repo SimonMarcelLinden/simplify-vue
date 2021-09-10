@@ -8,7 +8,7 @@
     :placeholder="placeholder"
     :required="required"
     :aria-required="required"
-    class="form-control"
+    :class="['form-control', sizeClass]"
   />
 </template>
 

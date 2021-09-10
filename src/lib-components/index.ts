@@ -8,6 +8,7 @@ export { default as SNavbarNav } from './components/navbar/navbar-nav/navbar-nav
 export { default as SNavDropdown } from './components/navbar/nav-dropdown/nav-dropdown.vue';
 export { default as SNavItem } from './components/navbar/nav-item/nav-item.vue';
 export { default as SNavLink } from './components/navbar/nav-link/nav-link.vue';
+export { default as SNavSearch } from './components/navbar/nav-search/nav-search.vue';
 
 export { default as SCollapse } from './components/collapse/collapse.vue';
 

@@ -1,7 +1,14 @@
 import Vue from "vue";
 
 const TYPES = ["button", "submit", "reset"];
-const VARIANTS = ["primary", "second", "third", "info", "danger", "warning"];
+const VARIANTS = ["primary", "secondary", "third", "info", "danger", "warning"];
+const SIZES = [
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "xll",
+];
 
 export default /*#__PURE__*/ Vue.extend({
     name: "SButton",
@@ -30,6 +37,17 @@ export default /*#__PURE__*/ Vue.extend({
               return isValid;
             },
         },
+        size: {
+          type: String,
+          default: null,
+          validator(value) {
+            const isValid = SIZES.includes(value) || value == null;
+            if (!isValid) {
+              console.warn(`allowed types are ${SIZES}`);
+            }
+            return isValid;
+          },
+        },
         disabled: {
             type: Boolean,
             required: false,
@@ -41,7 +59,10 @@ export default /*#__PURE__*/ Vue.extend({
     },
     computed: {
         classes: function() {
-            return ( this.variant ) ? 'btn-' + this.variant : null;
+            let $class = ( this.variant ) ? 'btn-' + this.variant : null;
+                $class = ( this.size ) ? $class + ' btn-' + this.size : $class;
+
+            return $class;
         }
     },
     methods: {
