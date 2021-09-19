@@ -241,7 +241,7 @@ export default /*#__PURE__*/ Vue.extend({
                     },
                 },
                 attrs: {
-                    id: this.id,
+                    id: this.id + '-control',
                 },
                 props: { },
             }
