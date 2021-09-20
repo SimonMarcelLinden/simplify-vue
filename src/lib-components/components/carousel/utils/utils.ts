@@ -33,11 +33,11 @@ export const cloneSlide = vnode => {
 	const data = extractData(vnode, isComp)
 	const tag = isComp ? vnode.componentOptions.Ctor : vnode.tag
 	// const childNodes  = children ? children.map(c => cloneSlide(c)) : undefined
-	let childNodes = undefined
+	let childNodes: VNode[] | undefined;
 
 	if (children) {
 		childNodes = children.map(function (c: VNode) {
-			cloneSlide(c);
+			return cloneSlide(c);
 		});
 	}
 
