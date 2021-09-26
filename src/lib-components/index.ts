@@ -22,3 +22,5 @@ export * from './components/form';
 
 export { default as SCarousel } from './components/carousel/carousel.vue';
 export { default as SCarouselSlide } from './components/carousel/carousel-slide.vue';
+
+export { default as SCountdown } from './components/countdown/countdown.vue';
