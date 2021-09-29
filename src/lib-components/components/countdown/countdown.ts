@@ -9,10 +9,11 @@ export default /*#__PURE__*/ Vue.extend({
 	components: {},
 	props: {
 		endDate: {
-			type 	: [Date, String],
-			default	: function() {
-				return new Date();
-			  },
+			type 	: Date, //[Date, String],
+			required: true,
+			// default	: function() {
+			// 	return new Date();
+			// },
 		},
         variant: {
             type 	: Number,
@@ -59,6 +60,9 @@ export default /*#__PURE__*/ Vue.extend({
 			return null;
 			// return `countdown-style-${this.variant}`
 		},
+		// _endDate() {
+		// 	return this.endDate;
+		// }
 	},
 	methods: {
 		formatNum(num: number): String {
@@ -67,11 +71,12 @@ export default /*#__PURE__*/ Vue.extend({
 		showRemaining() {
 			const timer = setInterval(() => {
 				const now = new Date();
-				const end = new Date("2021/09/28 00:00:00");
+				let end = new Date( this.endDate );
+
 				const distance = end.getTime() - now.getTime();
 
 				if(distance < 0 ){
-					clearInterval(timer); 
+					clearInterval(timer);
 					return;
 				}
 
@@ -83,7 +88,7 @@ export default /*#__PURE__*/ Vue.extend({
 				const minutes 	= Math.floor((distance % this._hours) / this._minutes);
 				// @ts-ignore-next-lines
 				const seconds 	= Math.floor((distance % this._minutes) / this._seconds);
-			
+
 				// @ts-ignore-next-lines
 				this.displayMinutes = this.formatNum(minutes);
 				// @ts-ignore-next-lines
