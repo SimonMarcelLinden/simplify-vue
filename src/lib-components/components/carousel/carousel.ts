@@ -35,13 +35,18 @@ export default /*#__PURE__*/ Vue.extend({
 		responsive	: {
 			type    : Object,
 			required: false,
-			default: () => ({
-				0     : {'items': 1},
-				481   : {'items': 2},
-				768   : {'items': 3},
-				1199  : {'items': 4}, 
-			})
-		}
+			// default: () => ({
+			// 	0     : {'items': 1},
+			// 	481   : {'items': 2},
+			// 	768   : {'items': 3},
+			// 	1199  : {'items': 4},
+			// })
+		},
+        customCSS:  {
+			type	: Boolean,
+			required: false,
+			default	: false,
+		},
 	},
 	data() {
 		return {
@@ -68,7 +73,10 @@ export default /*#__PURE__*/ Vue.extend({
 			if (arr.length === 2) {
 				arr = [...arr, ...arr];
 			}
-		
+
+			if (arr.length % this.display != 0)
+				arr.push(cloneSlide(arr[0]))
+
 			// let arr = arr.map((id, index) => ({ id, key: `${id}-${index}` }));
 			return arr;
 		},
@@ -92,7 +100,7 @@ export default /*#__PURE__*/ Vue.extend({
 				let cloneIndex 	= (slideIndex === 0 ? (lastIndex - a) : (slideIndex - a));
 				let pushItem    = cloneSlide( infoItems[cloneIndex] );
 
-				setSlideData    (pushItem, 'key', 100 * cloneIndex + 10);	
+				setSlideData    (pushItem, 'key', 100 * cloneIndex + 10);
 				mergeSlideData  (pushItem, 'attrs', { tabIndex: -1 } );
 				mergeSlideData  (pushItem, 'style', this.renderedWidth());
 
@@ -102,8 +110,8 @@ export default /*#__PURE__*/ Vue.extend({
 			for (let a = 0; a < this.display; a++) {
 				let cloneIndex 	= slideIndex + a;
 				let pushItem    = cloneSlide( infoItems[cloneIndex] );
-				
-				setSlideData    (pushItem, 'key', 100 * cloneIndex + 10);	
+
+				setSlideData    (pushItem, 'key', 100 * cloneIndex + 10);
 				mergeSlideData  (pushItem, 'attrs', { tabIndex: -1 } );
 				mergeSlideData  (pushItem, 'style', this.renderedWidth());
 
@@ -113,26 +121,26 @@ export default /*#__PURE__*/ Vue.extend({
 			for (let a = this.display; a < (this.display*2); a++) {
 				let cloneIndex = ((slideIndex+a) > lastIndex) ? (-this.display) + a : slideIndex+a;
 				let pushItem    = cloneSlide( infoItems[cloneIndex] );
-				
-				setSlideData    (pushItem, 'key', 100 * cloneIndex + 10);	
+
+				setSlideData    (pushItem, 'key', 100 * cloneIndex + 10);
 				mergeSlideData  (pushItem, 'attrs', { tabIndex: -1 } );
 				mergeSlideData  (pushItem, 'style', this.renderedWidth());
 
 				items.push(pushItem);
 			}
-			
+
 			return items;
         },
-        isNextAvailable(): boolean {        
+        isNextAvailable(): boolean {
             const items         = this.$slots['default'] || [];
             const currentIndex  = this.currentIndex;
             const infiniteLoop  = this.infiniteLoop;
 
             return ( currentIndex < items.length - 1 || ( infiniteLoop && items.length !== 1 ) );
         },
-        isPreviousAvailable(): boolean {        
+        isPreviousAvailable(): boolean {
             // const { items, currentIndex, infiniteLoop } = this;
-            
+
             const items         = this.$slots['default'] || [];
             const currentIndex  = this.currentIndex;
             const infiniteLoop  = this.infiniteLoop;
@@ -140,10 +148,13 @@ export default /*#__PURE__*/ Vue.extend({
             return currentIndex > 0 || (infiniteLoop && items.length !== 1);
         }
     },
-    methods: {  
+    methods: {
 		renderedWidth(): Object {
-			return { 'min-width': 100/this.display +'%' };
-		},      
+            // if(!this.customCSS)
+                return { 'min-width': 100/this.display +'%' };
+            // else
+                // return [];
+		},
 		updateEdgeEffect(deltaX = 0, isFinal = false) {
 			if (isFinal) {
 				this.transitionClass 	= "transition-edge";
@@ -164,7 +175,7 @@ export default /*#__PURE__*/ Vue.extend({
 			if (this.isTransitioning) {
 				return;
 			}
-				
+
 			if (!this.isPreviousAvailable) {
 				this.updateEdgeEffect(100, false);
 				setTimeout(() => {
@@ -191,7 +202,7 @@ export default /*#__PURE__*/ Vue.extend({
 		next: function() {
 			if (this.isTransitioning) {
 				return;
-			}   
+			}
 
 			if (!this.isNextAvailable) {
 				this.updateEdgeEffect(-100, false);
@@ -215,6 +226,33 @@ export default /*#__PURE__*/ Vue.extend({
 				this.updateCurrentItem();
 			}
 		},
+        setSlide: function(index: number) {
+
+			if (this.isTransitioning) {
+				return;
+			}
+console.log(index)
+			// if (!this.isNextAvailable) {
+			// 	this.updateEdgeEffect(-100, false);
+			// 	setTimeout(() => {
+			// 		this.updateEdgeEffect(0, true);
+			// 	}, 100);
+			// 	return;
+			// }
+
+			const currentIndex         = index;
+			const items                = this.infoItems;
+
+			this.transitionClass = "transition-item";
+			this.transformStyle  = "translateX(-100vw)";
+
+			const nextIndex = currentIndex === items.length - 1 ? 0 : currentIndex + 1;
+			this.upcomingIndex = nextIndex;
+
+			// if (prefersReducedMotion) {
+			// 	this.updateCurrentItem();
+			// }
+        },
 		updateCurrentItem() {
 			this.currentIndex = this.upcomingIndex;
 			this.resetTranslate();
@@ -227,22 +265,24 @@ export default /*#__PURE__*/ Vue.extend({
 			this.maxTranslateX		= 0;
 		},
 		calculateItemSize() {
-			Object.entries( this.responsive ).forEach(([key, value]) => {
-				if ( parseInt(key) <= window.innerWidth ) {
-					// @ts-ignore-this-line
-					this.display = value['items'];
-				}
-			})
+			if( this.responsive ){
+				Object.entries( this.responsive ).forEach(([key, value]) => {
+					if ( parseInt(key) <= window.innerWidth ) {
+						// @ts-ignore-this-line
+						this.display = value['items'];
+					}
+				})
+			}
         },
     },
     render: function (createElement): VNode {
 		let children: (VNode | VNode[]) = this.renderedItems;
-		
+
 		let wrapperAttr = {
 			attrs: {
 				role: 'list'
 			},
-			on: { 
+			on: {
 				transitionstart: (e: Event) => {
 					const element = e.currentTarget as HTMLElement
 					if(element.classList.contains('carousel-wrapper')) {
@@ -261,7 +301,7 @@ export default /*#__PURE__*/ Vue.extend({
 		};
 
 		let controls = (this.controls) ? createElement(
-			SCarouselControl, 
+			SCarouselControl,
 			{
 				on: {
 					previous: () => {
@@ -272,7 +312,7 @@ export default /*#__PURE__*/ Vue.extend({
 					},
 				},
 				attrs: {
-					id: this.id + '-control',
+					id: (this.id) ? this.id + '-control' : 'control',
 				},
 				props: { },
 			}
@@ -280,48 +320,54 @@ export default /*#__PURE__*/ Vue.extend({
 
 		let indicators = (this.indicators) ? createElement(
 			SCarouselIndicator, {
-			attrs: {
-				id			: this.id,
-				length		: children.length,
-				currentIndex: this.currentIndex,
-			},
-			props: { }
-		}) : undefined
+                on: {
+                    slide: (index: number) => {
+                        this.setSlide(index);
+                    },
+                },
+                attrs: {
+                    id			: this.id,
+                    length		: children.length/this.display,
+                    currentIndex: this.currentIndex,
+                },
+                props: { }
+		    }
+        ) : undefined
 
 		return createElement(
 			/** {String | Object | Function} tag
 			 * An HTML tag name, a component, an async component, or a
 			 * functional component.
-			 * Required. 
+			 * Required.
 			 **/
-			'div',        
+			'div',
 			/**
 			 * {Object} props
 			 * An object corresponding to the attributes, props and events
 			 * we would use in a template.
-			 * 
+			 *
 			 * Optional.
 			 **/
-			{    
+			{
 				attrs: {
 					id: this.id
 				},
-				'class': 'carousel slide',
+				'class': ['carousel', 'slide', (this.customCSS)? 'custom-style' : ''],
 			},
-			
-			/** 
+
+			/**
 			 * {String | Array | Object} children
 			 * Children VNodes, built using `h()`,
 			 * or using strings to get 'text VNodes' or
 			 * an object with slots.
-			 * 
+			 *
 			 * Optional.
 			 **/
 			[
 				createElement(
-					'div', 
+					'div',
 					wrapperAttr,
-					[ 
+					[
 						children,
 					]
 				),

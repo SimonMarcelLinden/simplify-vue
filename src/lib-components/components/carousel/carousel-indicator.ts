@@ -24,5 +24,10 @@ export default /*#__PURE__*/ Vue.extend({
 
       }
     },
-    computed: { }
+    computed: { },
+    methods: {
+        setSlide: function(index: Number) {
+            this.$emit('slide', index)
+        },
+    }
 });

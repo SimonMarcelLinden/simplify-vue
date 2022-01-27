@@ -1,6 +1,6 @@
 <template>
   <ol
-    :id="id + '_indicators'"
+    :id="(id) ? id + '_indicator' : 'indicator'"
     aria-hidden="false"
     aria-label="Select a slide to display"
     class="carousel-indicators"
@@ -9,9 +9,10 @@
       v-for="(step, index) in this.length"
       :key="index"
       role="button"
-      :id="id + '_indicator_' + index"
+      :id="(id) ? id + '_indicator_' + index : 'indicator_' + index"
       :class="{ active: currentIndex == index }"
-      tabindex="0"
+      @click="setSlide(index)"
+      :tabindex="10+index"
     />
   </ol>
 </template>
