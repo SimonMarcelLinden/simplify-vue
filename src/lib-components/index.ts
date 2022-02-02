@@ -11,6 +11,7 @@ export { default as SNavLink } from './components/navbar/nav-link/nav-link.vue';
 export { default as SNavSearch } from './components/navbar/nav-search/nav-search.vue';
 
 export { default as SCollapse } from './components/collapse/collapse.vue';
+export * from './components/dropdown';
 
 
 // export { default as SimplifyVueSample } from './simplify-vue-sample.vue';
