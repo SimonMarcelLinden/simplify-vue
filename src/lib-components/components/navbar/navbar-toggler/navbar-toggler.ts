@@ -1,10 +1,14 @@
-import Vue from "vue";
+import Vue, { VNode } from 'vue';
+
+import { SButton, SIcon} from '@/lib-components';
 
 import {eventBus} from "@/lib-components/events/collapse/collapse";
-
 export default /*#__PURE__*/ Vue.extend({
     name: "SNavbarToogler",
-    components: {},
+    components: {
+        SButton,
+        SIcon
+    },
     props: {
         target: {
             type: String,
@@ -32,9 +36,7 @@ export default /*#__PURE__*/ Vue.extend({
         };
     },
     watch: {
-        toggled: function() {
-
-        }
+        toggled: function() { }
     },
     methods: {
         // Todo: Add prop event: Event
@@ -46,5 +48,33 @@ export default /*#__PURE__*/ Vue.extend({
             }
         },
     },
-    mounted() { }
+    render: function(createElement): VNode{
+
+        return createElement(
+            SButton,
+            {
+                attrs: {
+                    type: 'button'
+                },
+                on: {
+                    onClick: (event: Event) => {
+                        this.onClick(event);
+                    },
+                },
+                'class': ['navbar-toggler'],
+            },
+            [
+                (this.icon) ? createElement(
+					SIcon,
+                    {
+                        attrs: {
+                            'icon': (!this.toggled) ? this.icon : this.toggleIcon,
+                        },
+                        'class': [],
+                    }
+
+                ): undefined,
+            ]
+        );
+    },
 });
