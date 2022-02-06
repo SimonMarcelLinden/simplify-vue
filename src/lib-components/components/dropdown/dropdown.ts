@@ -30,10 +30,9 @@ export default /*#__PURE__*/ Vue.extend({
 		},
         icon: {
 			type: String,
-			default: '',
 			required: false,
 			validator(value: String) {
-				if (value === '' || value === null || value === undefined) {
+				if (value === null || value === undefined) {
 					console.warn(`no icon set for item`);
 					// throw new TypeError(`no text set for item`)
 					return false;

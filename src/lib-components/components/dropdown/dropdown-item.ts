@@ -1,3 +1,4 @@
+import { SIcon } from '@/lib-components';
 import Vue, { VNode } from 'vue';
 
 const TARGET = [
@@ -78,7 +79,7 @@ export default /*#__PURE__*/ Vue.extend({
 	},
     render: function(createElement): VNode{
 
-        let icon = (this.icon) ? createElement('i',{ 'class': ['si', this.icon] }, ) : undefined;
+        let icon = (this.icon) ? createElement(SIcon,{ 'class': ['si', this.icon] }, ) : undefined;
 
         let link = (!this.$slots['default']) ?
         createElement(
