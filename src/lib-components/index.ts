@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+export { default as SLink } from '@/lib-components/components/link/link.vue'
 export { default as SButton } from './components/button/button.vue';
 
 export { default as SNavbar } from './components/navbar/navbar/navbar.vue';
@@ -13,6 +14,7 @@ export { default as SNavSearch } from './components/navbar/nav-search/nav-search
 export { default as SCollapse } from './components/collapse/collapse.vue';
 export * from './components/dropdown';
 
+export { default as SIcon } from './components/icon/icon.vue';
 
 // export { default as SimplifyVueSample } from './simplify-vue-sample.vue';
 
