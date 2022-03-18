@@ -74,6 +74,7 @@ export default /*#__PURE__*/ Vue.extend({
                     }
 
                 ): undefined,
+                this.$slots['default'],
             ]
         );
     },
